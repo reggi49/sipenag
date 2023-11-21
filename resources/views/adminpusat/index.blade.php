@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
 
-<h2>Halo, {{Auth::user()->name}}</h2>
+<h2>Halo, {{Auth::user()->name}} sebagai Admin Pusat</h2>
 
 @if (session('success'))
     <div class="alert alert-success">
@@ -42,13 +42,13 @@
                     <td>Terbit</td>          
                 @endif
                 <td>
-                    <a href="{{ route('calonpengawas.create', 'formasi='.$formasi->id, ) }}" class="btn btn-primary">Mendaftar</a>
-                    {{-- <a href="{{ route('calonpengawas.edit', $formasi->id) }}" class="btn btn-secondary">Edit</a> --}}
-                    {{-- <form action="{{ route('calonpengawas.destroy', $formasi) }}" method="POST" style="display: inline-block">
+                    <a href="{{ route('adminpusat.show', $formasi->id) }}" class="btn btn-primary">View</a>
+                    <a href="{{ route('adminpusat.edit', $formasi->id) }}" class="btn btn-secondary">Edit</a>
+                    <form action="{{ route('adminpusat.destroy', $formasi) }}" method="POST" style="display: inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                    </form> --}}
+                    </form>
                 </td>
             </tr>
         @endforeach
@@ -58,5 +58,5 @@
 
     </div>
 </div>
-{{-- {{ $adminprov->links() }} --}}
+{{-- {{ $adminpusat->links() }} --}}
 @endsection

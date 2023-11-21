@@ -3,18 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\CalonPengawas;
+use App\Models\UsulanFormasi;
+use App\Models\UjiKompetensi;
+
 use Illuminate\Http\Request;
 
 class CalonPengawasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $calonpengawas = CalonPengawas::latest()->paginate(10);
+        $formasi = UsulanFormasi::latest()->paginate(10);
 
-        return view('calonpengawas.index', compact('calonpengawas'));
+        return view('calonpengawas.index', compact('formasi'));
     }
 
     public function create()
@@ -22,17 +29,41 @@ class CalonPengawasController extends Controller
         return view('calonpengawas.create');
     }
 
+    public function hasil()
+    {
+        $calonpengawas = [];
+        return view('calonpengawas.hasil', compact('calonpengawas'));
+    }
+
+    public function cekhasil(Request $request)
+    {
+        $nip = $request->nip;
+        $no_ujian = $request->no_ujian;
+        
+        $hasil = UjiKompetensi::where('nip', '=',  $nip)
+        ->where('no_ujian', '=',  $no_ujian)
+        ->get();
+
+        // dd($hasil);
+        return view('calonpengawas.hasil', compact('hasil', 'nip', 'no_ujian'));
+    }
+
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-        ]);
+        $input = $request->all();
 
-        CalonPengawas::create($request->all());
+        if ($request->file('file')) {
+            $fileName = time() . '_' . $request->file->getClientOriginalName();
+            $destinationPath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+            // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            // $image->move($destinationPath, $profileImage);
+            $input['file'] = '/storage/' .$destinationPath;
+        }
+
+        CalonPengawas::create($input);
 
         return redirect()->route('calonpengawas.index')
-        ->with('success', 'Calonpengawas created successfully.');
+        ->with('success', 'Dokumen Calon pengawas created successfully.');
     }
 
     public function show(CalonPengawas $calonpengawas)
@@ -52,10 +83,21 @@ class CalonPengawasController extends Controller
             'content' => 'required',
         ]);
 
-        $calonpengawas->update($request->all());
+        $input = $request->all();
+
+        if ($image = $request->file('image')) {
+            $destinationPath = 'images/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input['image'] = "$profileImage";
+        } else {
+            unset($input['image']);
+        }
+
+        $calonpengawas->update($input);
 
         return redirect()->route('calonpengawas.index')
-        ->with('success', 'Calonpengawas updated successfully.');
+        ->with('success', 'Calon Pengawas updated successfully.');
     }
 
     public function destroy(CalonPengawas $calonpengawas)
@@ -63,6 +105,6 @@ class CalonPengawasController extends Controller
         $calonpengawas->delete();
 
         return redirect()->route('calonpengawas.index')
-        ->with('success', 'Calonpengawas deleted successfully.');
+        ->with('success', 'Calon Pengawas deleted successfully.');
     }
 }

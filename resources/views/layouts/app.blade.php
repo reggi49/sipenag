@@ -12,7 +12,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
+    
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -49,14 +49,26 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                <a id="navbar-item" class="nav-link" href="{{ route('home') }}"  aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Test
-                                </a>
-                            </li>
+                            @if (Auth::user()->level == 2)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('adminkota.create') }}">Upload Usulan Formasi</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('adminkota.verifikasi') }}">Verifikasi Calon Pengawas</a>
+                                </li>
+                            @endif
+
+                            @if (Auth::user()->level == 1)
+                                <li class="nav-item">
+                                    <a id="navbar-item" class="nav-link" href="{{ route('calonpengawas.cekhasil') }}"  aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Cek Hasil
+                                    </a>
+                                </li>
+                            @endif
+                            
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->name}}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -82,4 +94,23 @@
         </main>
     </div>
 </body>
+    <script src="https://mbtech.app/office/js/jquery.min.js"></script>
+    <script src="https://mbtech.app/office/js/widgets.js"></script> 
+    <script src="https://mbtech.app/office/js/lib/data-table/datatables.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">  
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>  
+
+    <script type="text/javascript">  
+            $('.datepicker').datepicker({ 
+                autoclose: true,   
+                format: 'dd-mm-yyyy'  
+            });  
+        </script>
+    <script type="text/javascript">  
+        $('.datepickerr').datepicker({ 
+            autoclose: true,   
+            format: 'dd-mm-yyyy'  
+         });  
+    </script>
 </html>

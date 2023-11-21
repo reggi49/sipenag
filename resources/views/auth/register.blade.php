@@ -26,18 +26,52 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                            <label for="nip" class="col-md-4 col-form-label text-md-end">{{ __('NIP') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="nip" type="nip" class="form-control @error('nip') is-invalid @enderror" name="nip" value="{{ old('nip') }}" required autocomplete="nip">
 
-                                @error('email')
+                                @error('nip')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
                         </div>
+
+                        {{-- <div class="row mb-3">
+                            <label for="status" class="col-md-4 col-form-label text-md-end">{{ __('Status') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="status" type="status" class="form-control @error('status') is-invalid @enderror" name="status" value="{{ old('status') }}" required autocomplete="status">
+                                    <select  id="status" type="status" @error('status') is-invalid class="form-select @enderror" name="status" value="{{ old('status') }}">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">Calon Pengawas</option>
+                                    <option value="2">Admin Kota</option>
+                                    <option value="3">Admin Provinsi</option>
+                                    <option value="4">Admin Pusat</option>
+                                    </select>
+                                @error('status')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div> --}}
+
+                        {{-- <div class="row mb-3">
+                            <label for="kota" class="col-md-4 col-form-label text-md-end">{{ __('Kota') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="kota" type="kota" class="form-control @error('kota') is-invalid @enderror" name="kota" value="{{ old('kota') }}" required autocomplete="kota">
+
+                                @error('kota')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div> --}}
 
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>

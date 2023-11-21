@@ -24,6 +24,7 @@ return new class extends Migration
             $table->pendidikan();
             $table->pak_terakhir();
             $table->status();
+            $table->image();
             $table->timestamps();
         });
     }

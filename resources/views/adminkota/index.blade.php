@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
 
-<h2>Halo, {{Auth::user()->name}}</h2>
+<h2>Halo, {{Auth::user()->name}} sebagai Admin Kota {{Auth::user()->kota}}</h2>
 
 @if (session('success'))
     <div class="alert alert-success">
@@ -20,7 +20,6 @@
             <th>Nama Dokument</th>
             <th>Nomor Dokument</th>
             <th>Tanggal Dokument</th>
-            <th>Status</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -32,23 +31,14 @@
                 <td>{{ $formasi->nama_dokumen }}</td>
                 <td>{{ $formasi->nomor_dokumen }}</td>
                 <td>{{ $formasi->tanggal_dokumen }}</td>
-                @if($formasi->status === '1')       
-                    <td class="bg-info p-3 mb-2 text-white">Diverifikasi Kota</td>         
-                @elseif($formasi->status === '2')
-                    <td class="bg-primary p-3 mb-2 text-white">Diverifikasi Provinsi</td>
-                @elseif($formasi->status === '3')
-                    <td class="bg-success p-3 mb-2 text-white">Terbit</td>    
-                @else
-                    <td>Terbit</td>          
-                @endif
                 <td>
-                    <a href="{{ route('calonpengawas.create', 'formasi='.$formasi->id, ) }}" class="btn btn-primary">Mendaftar</a>
-                    {{-- <a href="{{ route('calonpengawas.edit', $formasi->id) }}" class="btn btn-secondary">Edit</a> --}}
-                    {{-- <form action="{{ route('calonpengawas.destroy', $formasi) }}" method="POST" style="display: inline-block">
+                    <a href="{{ route('adminkota.show', $formasi->id) }}" class="btn btn-primary">View</a>
+                    <a href="{{ route('adminkota.edit', $formasi->id) }}" class="btn btn-secondary">Edit</a>
+                    <form action="{{ route('adminkota.destroy', $formasi) }}" method="POST" style="display: inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                    </form> --}}
+                    </form>
                 </td>
             </tr>
         @endforeach
@@ -58,5 +48,5 @@
 
     </div>
 </div>
-{{-- {{ $adminprov->links() }} --}}
+{{-- {{ $adminkota->links() }} --}}
 @endsection

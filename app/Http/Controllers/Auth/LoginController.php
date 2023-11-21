@@ -42,19 +42,35 @@ class LoginController extends Controller
         $inputVal = $request->all();
 
         $this->validate($request, [
-            'email' => 'required|email',
+            'nip' => 'required',
             'password' => 'required',
         ]);
 
-        if (auth()->attempt(array('email' => $inputVal['email'], 'password' => $inputVal['password']))) {
+        if (auth()->attempt(array('nip' => $inputVal['nip'], 'password' => $inputVal['password']))) {
             if (auth()->user()->level == 1) {
-                return redirect()->route('admin.route');
-            } else {
+                return redirect()->route('calonpengawas.index');
+            }
+            else if (auth()->user()->level == 2) {
+                return redirect()->route('adminkota.index');
+            }
+            else if (auth()->user()->level == 3) {
+                return redirect()->route('adminprov.index');
+            }
+            else if (auth()->user()->level == 4) {
+                return redirect()->route('adminpusat.index');
+            }
+            // if (auth()->user()->level == 5) {
+            //     return redirect()->route('admin.kemenpan');
+            // }
+            // if (auth()->user()->level == 6) {
+            //     return redirect()->route('admin.kemendikbud');
+            // }
+            else {
                 return redirect()->route('home');
             }
         } else {
             return redirect()->route('login')
-            ->with('error', 'Email & Password are incorrect.');
+            ->with('error', 'NIP & Password are incorrect.');
         }
     }
 }
